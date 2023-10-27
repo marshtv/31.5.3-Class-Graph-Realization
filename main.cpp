@@ -24,22 +24,30 @@ public:
 
 class ListGraph : virtual public IGraph {
 private:
-	std::vector<std::vector<unsigned int>> graph_lists;
+	unsigned int vertex_count = 0;
+	std::vector<std::vector<unsigned int>> graph_list;
 public:
-	ListGraph() = default;
+	explicit ListGraph(unsigned int _vertex_count) : vertex_count(_vertex_count) {
+		for (int i = 0; i < _vertex_count; ++i) {
+			std::vector<unsigned int> edges;
+			graph_list.push_back(edges);
+		}
+	}
 
 	ListGraph(const ListGraph& other) {
-		for (int i = 0; i < other.graph_lists.size(); ++i) {
-			for (int j = 0; j < other.graph_lists[i].size(); ++j) {
-				graph_lists[i].push_back(other.graph_lists[i][j]);
+		vertex_count = other.vertex_count;
+		for (int i = 0; i < other.graph_list.size(); ++i) {
+			for (int j = 0; j < other.graph_list[i].size(); ++j) {
+				graph_list[i].push_back(other.graph_list[i][j]);
 			}
 		}
 	}
 
 	ListGraph& operator=(const ListGraph& other) {
-		for (int i = 0; i < other.graph_lists.size(); ++i) {
-			for (int j = 0; j < other.graph_lists[i].size(); ++j) {
-				graph_lists[i].push_back(other.graph_lists[i][j]);
+		vertex_count = other.vertex_count;
+		for (int i = 0; i < other.graph_list.size(); ++i) {
+			for (int j = 0; j < other.graph_list[i].size(); ++j) {
+				graph_list[i].push_back(other.graph_list[i][j]);
 			}
 		}
 		return *this;
@@ -48,27 +56,23 @@ public:
 	~ListGraph() = default;
 
 	void AddEdge(unsigned int from, unsigned int to) override {
-		for (unsigned int i = 0; i < graph_lists.size(); ++i) {
-			if (i == from) {
-				graph_lists[i].push_back(to);
-			}
-		}
+		graph_list[from].push_back(to);
 	}
 
 	unsigned int VerticesCount() override {
-		return (unsigned int)graph_lists.size();
+		return vertex_count;
 	}
 
 	void GetNextVertices(unsigned int vertex, std::vector<unsigned int> &vertices) override {
-		for (unsigned int i = 0; i < graph_lists[vertex].size(); ++i) {
-			vertices.push_back(graph_lists[vertex][i]);
+		for (unsigned int i = 0; i < graph_list[vertex].size(); ++i) {
+			vertices.push_back(graph_list[vertex][i]);
 		}
 	}
 
 	void GetPrevVertices(unsigned int vertex, std::vector<unsigned int> &vertices) override {
-		for (int i = 0; i < graph_lists.size(); ++i) {
-			for (int j = 0; j < graph_lists[i].size(); ++j) {
-				if (graph_lists[i][j] == vertex)
+		for (int i = 0; i < graph_list.size(); ++i) {
+			for (int j = 0; j < graph_list[i].size(); ++j) {
+				if (graph_list[i][j] == vertex)
 					vertices.push_back(i);
 			}
 		}
@@ -146,15 +150,19 @@ public:
 };
 
 int main() {
-	auto* listGraph = new ListGraph();
-
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << "Input number of vertices for ListGraph:";
+	unsigned int vertex_count;
+	std::cin >> vertex_count;
+	auto* listGraph = new ListGraph(vertex_count);
+	std::cout << "--------------------------------------" << std::endl;
 
 	std::cout << "--------------------------------------" << std::endl;
 	std::cout << "Input number of vertices for MatrixGraph:";
-	unsigned int vertex_count;
-	std::cin >> vertex_count;
-	auto* matrixGraph = new MatrixGraph(vertex_count);
-
+	unsigned int vertex_count2;
+	std::cin >> vertex_count2;
+	auto* matrixGraph = new MatrixGraph(vertex_count2);
+	std::cout << "--------------------------------------" << std::endl;
 
 	delete listGraph;
 	delete matrixGraph;
