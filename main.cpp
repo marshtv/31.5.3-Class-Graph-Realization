@@ -7,7 +7,7 @@ public:
 
 	IGraph() = default;
 
-	IGraph(const IGraph& _oth) = default;
+	IGraph(const IGraph& other) = default;
 
 	IGraph& operator=(const IGraph& other) = default;
 
@@ -30,18 +30,18 @@ public:
 
 	ListGraph() = default;
 
-	ListGraph(const ListGraph *other) {
-		for (int i = 0; i < other->graph_lists.size(); ++i) {
-			for (int j = 0; j < other->graph_lists[i].size(); ++j) {
-				graph_lists[i].push_back(other->graph_lists[i][j]);
+	ListGraph(const ListGraph& other) {
+		for (int i = 0; i < other.graph_lists.size(); ++i) {
+			for (int j = 0; j < other.graph_lists[i].size(); ++j) {
+				graph_lists[i].push_back(other.graph_lists[i][j]);
 			}
 		}
 	}
 
-	ListGraph& operator=(const ListGraph *other) {
-		for (int i = 0; i < other->graph_lists.size(); ++i) {
-			for (int j = 0; j < other->graph_lists[i].size(); ++j) {
-				graph_lists[i].push_back(other->graph_lists[i][j]);
+	ListGraph& operator=(const ListGraph& other) {
+		for (int i = 0; i < other.graph_lists.size(); ++i) {
+			for (int j = 0; j < other.graph_lists[i].size(); ++j) {
+				graph_lists[i].push_back(other.graph_lists[i][j]);
 			}
 		}
 		return *this;
@@ -91,22 +91,22 @@ public:
 		}
 	}
 
-	MatrixGraph(const MatrixGraph *other) {
-		vertex_count = other->vertex_count;
-		edges_count = other->edges_count;
-		for (int i = 0; i < other->matrix.size(); ++i) {
-			for (int j = 0; j < other->matrix[i].size(); ++j) {
-				matrix[i].push_back(other->matrix[i][j]);
+	MatrixGraph(const MatrixGraph& other) {
+		vertex_count = other.vertex_count;
+		edges_count = other.edges_count;
+		for (int i = 0; i < other.matrix.size(); ++i) {
+			for (int j = 0; j < other.matrix[i].size(); ++j) {
+				matrix[i].push_back(other.matrix[i][j]);
 			}
 		}
 	}
 
-	MatrixGraph& operator=(const MatrixGraph *other) {
-		vertex_count = other->vertex_count;
-		edges_count = other->edges_count;
-		for (int i = 0; i < other->matrix.size(); ++i) {
-			for (int j = 0; j < other->matrix[i].size(); ++j) {
-				matrix[i].push_back(other->matrix[i][j]);
+	MatrixGraph& operator=(const MatrixGraph& other) {
+		vertex_count = other.vertex_count;
+		edges_count = other.edges_count;
+		for (int i = 0; i < other.matrix.size(); ++i) {
+			for (int j = 0; j < other.matrix[i].size(); ++j) {
+				matrix[i].push_back(other.matrix[i][j]);
 			}
 		}
 		return *this;
