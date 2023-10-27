@@ -89,7 +89,7 @@ public:
 		for (unsigned int i = 0; i < _vertex_count; ++i) {
 			std::vector<int> _matrix;
 			for (unsigned int j = 0; j < _vertex_count; ++j) {
-				_matrix.push_back(-1);
+				_matrix.push_back(edges_count);
 			}
 			matrix.push_back(_matrix);
 		}
@@ -116,14 +116,7 @@ public:
 		return *this;
 	}
 
-	~MatrixGraph() {
-		for (unsigned int i = matrix.size() - 1; i <= 0 ; --i) {
-			for (unsigned int j = matrix[i].size() - 1; j <= 0; --j) {
-				matrix[i].pop_back();
-			}
-			matrix.pop_back();
-		}
-	}
+	~MatrixGraph() = default;
 
 	void AddEdge(unsigned int from, unsigned int to) override {
 		edges_count++;
